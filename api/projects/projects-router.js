@@ -1,6 +1,7 @@
 const project = require('./projects-model');
 const express = require("express")
 const router = express.Router()
+const pmw = require("./projects-middleware");
 
 router.get('/', (req, res) =>{
     project.get(req.query)
@@ -17,7 +18,7 @@ router.get("/:id", (req,res)=>{
     const idPro = req.params.id
     project.get(idPro)
        .then(project =>{
-        if(!dog){
+        if(!project){
             res.status(404).json(`${idPro} does not exist`)
           }else{
             res.status(200).json(project)
@@ -28,7 +29,7 @@ router.get("/:id", (req,res)=>{
         });
 });
 
-router.post("/", (req,res)=>{
+router.post("/",pmw, (req,res)=>{
     const newProject = req.body
     project.insert(newProject)
           .then(project=>{
@@ -49,7 +50,7 @@ router.put('/:id', async (req,res)=>{
         }else{
             const insertedProject = await project.update(id,changes)
             if(!insertedProject){
-                res.status(404).json({"project does not exist"})
+                res.status(404).json("project does not exist")
             }else{
                 res.status(200).json(insertedProject)
             }
@@ -59,7 +60,7 @@ router.put('/:id', async (req,res)=>{
     }
 });
 
-router.remove("/:id", async (req,res)=>{
+router.delete("/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteProject = await project.remove(id)

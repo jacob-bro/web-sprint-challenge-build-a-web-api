@@ -4,7 +4,9 @@
     "main": "index.js",
     "scripts": {
         "test": "cross-env NODE_ENV=testing jest --verbose --runInBand --silent",
-        "resetdb": "knex migrate:rollback && knex migrate:latest && knex seed:run"
+        "resetdb": "knex migrate:rollback && knex migrate:latest && knex seed:run",
+        "start": "node index.js",
+        "server": "nodemon index.js"
     },
     "repository": {
         "type": "git",
@@ -17,6 +19,7 @@
         "helmet": "4.6.0",
         "knex": "0.95.11",
         "morgan": "^1.10.0",
+        "node": "^17.2.0",
         "sqlite3": "5.0.2"
     },
     "devDependencies": {

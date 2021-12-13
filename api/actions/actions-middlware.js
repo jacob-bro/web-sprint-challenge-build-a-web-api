@@ -1,1 +1,10 @@
-// add middlewares here related to actions
+const checkAction = (req,res,next)=>{
+    if(req.query.word && req.query.word === "badword"){
+      res.json("You used a badword")
+}else{
+    next() 
+  }
+}
+
+
+module.exports = checkAction;  

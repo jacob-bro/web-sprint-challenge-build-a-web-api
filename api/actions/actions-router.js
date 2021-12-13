@@ -1,6 +1,7 @@
 const action = require('./actions-model');
 const express = require("express")
 const router = express.Router()
+const amw = require("./actions-middlware.js")
 
 router.get('/', (req, res) =>{
     action.get(req.query)
@@ -17,7 +18,7 @@ router.get("/:id", (req,res)=>{
     const idAct = req.params.id
     action.get(idAct)
        .then(action =>{
-        if(!dog){
+        if(!action){
             res.status(404).json(`${idAct} does not exist`)
           }else{
             res.status(200).json(action)
@@ -28,7 +29,7 @@ router.get("/:id", (req,res)=>{
         });
 });
 
-router.post("/", (req,res)=>{
+router.post("/",amw, (req,res)=>{
     const newAction = req.body
     action.insert(newAction)
           .then(action=>{
@@ -49,23 +50,23 @@ router.put('/:id', async (req,res)=>{
         }else{
             const insertedAction = await action.update(id,changes)
             if(!insertedAction){
-                res.status(404).json({"Action does not exist"})
+                res.status(404).json("Action does not exist")
             }else{
                 res.status(200).json(insertedAction)
             }
         }
     }catch(error){
-        res.status(500).json({message: error.message}) 
+        res.status(400).json({message: error.message}) 
     }
 });
 
-router.remove("/:id", async (req,res)=>{
+router.delete("/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteAction = await action.remove(id)
         res.status(200).json(deleteAction)
     }catch(error){
-        res.status(500).json({message: error.message}) 
+        res.status(404).json({message: error.message}) 
     }
 });
 
