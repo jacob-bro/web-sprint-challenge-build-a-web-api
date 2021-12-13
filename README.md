@@ -16,7 +16,7 @@ In meeting the minimum viable product (MVP) specifications listed below, your pr
 
 ## Instructions
 
-### Task 1: Project Set Up
+### Task 1: Project Set Up  \\\
 
 - [ ] Run `npm install` to install your dependencies.
 - [ ] Run tests locally executing `npm test`.
@@ -26,7 +26,7 @@ In meeting the minimum viable product (MVP) specifications listed below, your pr
 
 Your finished project must include all of the following requirements:
 
-#### NPM Scripts
+#### NPM Scripts  \\\
 
 A _"test"_ script already exists you can use to run tests against your code.
 A _"resetdb"_ script exists that allows you to reset the database to its original state.
@@ -35,7 +35,7 @@ A _"resetdb"_ script exists that allows you to reset the database to its origina
 - [ ] Write an _npm script_ named _"server"_ that uses `nodemon` to run the API server.
 - [ ] Install _nodemon_ as a development dependency that would not be used in production.
 
-#### Environment Variables
+#### Environment Variables \\\
 
 - [ ] Bring the port number from the `process.env` variable, falling back to `9000` if `process.env.PORT` is undefined **!!!**
 
