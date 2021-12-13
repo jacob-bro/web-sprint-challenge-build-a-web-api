@@ -36,7 +36,7 @@ router.post("/",pmw, (req,res)=>{
               res.json(project)
           })
           .catch(error => {
-            res.status(500).json({message: error.message})
+            res.status(400).json({message: error.message})
         });
 });
 
@@ -50,13 +50,13 @@ router.put('/:id', async (req,res)=>{
         }else{
             const insertedProject = await project.update(id,changes)
             if(!insertedProject){
-                res.status(404).json("project does not exist")
+                res.status(400).json("project does not exist")
             }else{
-                res.status(200).json(insertedProject)
+                res.status(400).json(insertedProject)
             }
         }
     }catch(error){
-        res.status(500).json({message: error.message}) 
+        res.status(400).json({message: error.message}) 
     }
 });
 
@@ -64,7 +64,7 @@ router.delete("/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteProject = await project.remove(id)
-        res.status(200).json(deleteProject)
+        res.status(404).json(deleteProject)
     }catch(error){
         res.status(500).json({message: error.message}) 
     }

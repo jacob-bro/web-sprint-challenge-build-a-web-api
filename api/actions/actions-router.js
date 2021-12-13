@@ -19,7 +19,7 @@ router.get("/:id", (req,res)=>{
     action.get(idAct)
        .then(action =>{
         if(!action){
-            res.status(404).json(`${idAct} does not exist`)
+            res.status(404).json([])
           }else{
             res.status(200).json(action)
           }
@@ -36,7 +36,7 @@ router.post("/",amw, (req,res)=>{
               res.json(action)
           })
           .catch(error => {
-            res.status(500).json({message: error.message})
+            res.status(400).json({message: error.message})
         });
 });
 
@@ -64,7 +64,7 @@ router.delete("/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteAction = await action.remove(id)
-        res.status(200).json(deleteAction)
+        res.status(404).json(deleteAction)
     }catch(error){
         res.status(404).json({message: error.message}) 
     }
@@ -73,7 +73,7 @@ router.delete("/:id", async (req,res)=>{
 
 
 router.use("*",(req,res)=>{
-    res.status(404).json({message:"404 not found"})
+    res.status(404).json([])
 });
 
 module.exports = router
