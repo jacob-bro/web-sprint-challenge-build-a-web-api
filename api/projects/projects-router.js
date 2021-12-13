@@ -1,12 +1,8 @@
-const express = require('express');
+const project = require('./projects-model');
+const express = require("express")
+const router = express.Router()
 
-const server = express();
-
-server.use(express.json());
-
-const project = require('./projects/projects-model');
-
-server.get('/api/projects', (req, res) =>{
+router.get('/api/projects', (req, res) =>{
     project.get(req.query)
       .then(project => {
           res.status(200).json(project)
@@ -17,7 +13,7 @@ server.get('/api/projects', (req, res) =>{
 
 });
 
-server.get("/api/projects/:id", (req,res)=>{
+router.get("/api/projects/:id", (req,res)=>{
     const idPro = req.params.id
     project.get(idPro)
        .then(project =>{
@@ -32,7 +28,7 @@ server.get("/api/projects/:id", (req,res)=>{
         });
 });
 
-server.post("/api/projects", (req,res)=>{
+router.post("/api/projects", (req,res)=>{
     const newProject = req.body
     project.insert(newProject)
           .then(project=>{
@@ -43,7 +39,7 @@ server.post("/api/projects", (req,res)=>{
         });
 });
 
-server.put('/api/projects/:id', async (req,res)=>{
+router.put('/api/projects/:id', async (req,res)=>{
     const {id} = req.params
     const changes = req.body
 
@@ -63,7 +59,7 @@ server.put('/api/projects/:id', async (req,res)=>{
     }
 });
 
-server.remove("/api/projects/:id", async (req,res)=>{
+router.remove("/api/projects/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteProject = await project.remove(id)
@@ -75,6 +71,6 @@ server.remove("/api/projects/:id", async (req,res)=>{
 
 
 
-server.use("*",(req,res)=>{
+router.use("*",(req,res)=>{
     res.status(404).json({message:"404 not found"})
 });

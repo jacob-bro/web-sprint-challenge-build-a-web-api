@@ -1,12 +1,8 @@
-const express = require('express');
+const action = require('./actions-model');
+const express = require("express")
+const router = express.Router()
 
-const server = express();
-
-server.use(express.json());
-
-const action = require('./actions/actions-model');
-
-server.get('/api/actions', (req, res) =>{
+router.get('/api/actions', (req, res) =>{
     action.get(req.query)
       .then(action => {
           res.status(200).json(action)
@@ -17,7 +13,7 @@ server.get('/api/actions', (req, res) =>{
 
 });
 
-server.get("/api/actions/:id", (req,res)=>{
+router.get("/api/actions/:id", (req,res)=>{
     const idAct = req.params.id
     action.get(idAct)
        .then(action =>{
@@ -32,7 +28,7 @@ server.get("/api/actions/:id", (req,res)=>{
         });
 });
 
-server.post("/api/actions", (req,res)=>{
+router.post("/api/actions", (req,res)=>{
     const newAction = req.body
     action.insert(newAction)
           .then(action=>{
@@ -43,7 +39,7 @@ server.post("/api/actions", (req,res)=>{
         });
 });
 
-server.put('/api/actions/:id', async (req,res)=>{
+router.put('/api/actions/:id', async (req,res)=>{
     const {id} = req.params
     const changes = req.body
 
@@ -63,7 +59,7 @@ server.put('/api/actions/:id', async (req,res)=>{
     }
 });
 
-server.remove("/api/actions/:id", async (req,res)=>{
+router.remove("/api/actions/:id", async (req,res)=>{
     try{
         const {id} = req.params
         const deleteAction = await action.remove(id)
@@ -75,6 +71,6 @@ server.remove("/api/actions/:id", async (req,res)=>{
 
 
 
-server.use("*",(req,res)=>{
+router.use("*",(req,res)=>{
     res.status(404).json({message:"404 not found"})
 });
