@@ -1,15 +1,17 @@
-require('dotenv').config()
+const express = require('express');
+const actionsRouter = require("./actions/actions-router.js");
+const projectsRouter = require("./projects/projects-router.js");
+const morgan = require("morgan");
+const helmet = require("helmet");
 
-const express = require('express')
-const actionsRouter = require("./actions/actions-router.js")
-const projectsRouter = require("./projects/projects-router.js")
 const server = express()
 
+server.use(morgan("dev"));
+server.use(helmet());
 server.use(express.json());
-server.use("/api/actions",actionsRouter)
-server.use("/api/projects",projectsRouter)
 
-const PORT = process.env.PORT || 9000
+server.use("/api/actions",actionsRouter);
+server.use("/api/projects",projectsRouter);
 
 // Configure your server here
 // Build your actions router in /api/actions/actions-router.js
